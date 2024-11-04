@@ -129,11 +129,11 @@ export class Preloader extends Scene {
         this.load.image("ob-4", "images/object-4.png");
         this.load.image("ob-5", "images/object-5.png");
         this.load.image("ob-6", "images/object-6.png");
-        this.load.image("cursor", "images/cursor.png");
         this.load.image("farm", "images/farm.png");
         this.load.image("finish", "images/finish.png");
         this.load.image("startBtn", "images/start-button.png");
         this.load.image("startText", "images/start-text.png");
+        this.load.image("mudGround", "images/mud-ground.png");
         this.load.image("seed", "images/seed.png");
         this.load.image("plant1", "images/p-1.png");
         this.load.image("plant2", "images/p-2.png");
@@ -147,12 +147,12 @@ export class Preloader extends Scene {
     }
 
     create() {
+        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
+        //  For example, you can define global animations here, so we can use them in other scenes.
+        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
         this.leaveTweens();
         setTimeout(() => {
             this.scene.start("MainMenu");
         }, 500);
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
     }
 }
