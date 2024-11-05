@@ -44,7 +44,7 @@ export class Toast extends Phaser.GameObjects.Container {
         });
 
         // Auto-remove after 3 seconds
-        this.scene.time.delayedCall(3000, () => {
+        this.scene.time.delayedCall(2000, () => {
             this.destroyToast();
         }, [], this);
     }

@@ -13,12 +13,12 @@ export class Game extends Scene {
     private numOfPlants = 0;
 
     private dropZones = [
-        { x: 537, y: 596, radius: 20, isEmpty: true },
-        { x: 591, y: 568, radius: 20, isEmpty: true },
-        { x: 642, y: 537, radius: 20, isEmpty: true },
-        { x: 594, y: 625, radius: 20, isEmpty: true },
-        { x: 650, y: 596, radius: 20, isEmpty: true },
-        { x: 698, y: 568, radius: 20, isEmpty: true },
+        { x: 537, y: 596, radius: 30, isEmpty: true },
+        { x: 591, y: 568, radius: 30, isEmpty: true },
+        { x: 642, y: 537, radius: 30, isEmpty: true },
+        { x: 594, y: 625, radius: 30, isEmpty: true },
+        { x: 650, y: 596, radius: 30, isEmpty: true },
+        { x: 698, y: 568, radius: 30, isEmpty: true },
     ];
 
     constructor() {
@@ -120,17 +120,24 @@ export class Game extends Scene {
             return;
         };
         let success = false;
+        let failureMsg;
         this.dropZones.forEach((zone) => {
             const distance = Phaser.Math.Distance.BetweenPoints(obj, zone);
-            if (zone.isEmpty && distance <= zone.radius) {
-                success = true;
-                this.success.play({ volume: 0.01 });
-                this.handleDrop(obj, zone);
+            if (distance <= zone.radius) {
+                if (zone.isEmpty) {
+                    success = true;
+                    this.success.play({ volume: 0.01 });
+                    this.handleDrop(obj, zone);
+                } else {
+                    failureMsg = "تمت زراعة هذا المربع من قبل , اختر مكانا فارغا";
+                }
                 return;
             }
         });
         if (!success) {
-            const failToast = new Toast(this, this.scale.width * .5, this.scale.height * .9, "لابد من وضع البذرة في المكان المناسب", 'failure');
+            failureMsg = failureMsg ?? "لابد من وضع البذرة في المكان المناسب";
+
+            const failToast = new Toast(this, this.scale.width * .5, this.scale.height * .9, failureMsg, 'failure');
             this.add.existing(failToast);
             this.moveObjToItsOriginalPlace(obj);
             this.fail.play({ volume: 0.01 });
@@ -156,10 +163,16 @@ export class Game extends Scene {
             ease: 'back.out',
             onComplete: () => {
                 if (this.numOfPlants >= this.requiredPlants) {
+                    this.reset()
                     this.complete.play({ volume: 0.01 })
                     this.scene.start('WellDone');
                 }
             }
         });
+    }
+
+    reset() {
+        this.numOfPlants = 0;
+        this.dropZones.forEach(zone => { zone.isEmpty = true })
     }
 }
