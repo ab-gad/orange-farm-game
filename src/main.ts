@@ -1,8 +1,9 @@
 import { Boot } from './scenes/Boot';
 import { Game as MainGame } from './scenes/Game';
-import { GameOver } from './scenes/GameOver';
+import { WellDone } from './scenes/WellDone';
 import { MainMenu } from './scenes/MainMenu';
 import { Preloader } from './scenes/Preloader';
+import RoundRectanglePlugin from 'phaser3-rex-plugins/plugins/roundrectangle-plugin';
 
 import { Game, Types } from "phaser";
 
@@ -23,7 +24,14 @@ const config: Types.Core.GameConfig = {
         Preloader,
         MainMenu,
         MainGame,
-        GameOver
-    ]
+        WellDone,
+    ],
+    plugins: {
+        global: [{
+            key: 'rexRoundRectanglePlugin',
+            plugin: RoundRectanglePlugin,
+            start: true
+        }]
+    }
 };
 export default new Game(config);
