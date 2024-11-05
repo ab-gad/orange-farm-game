@@ -41,11 +41,6 @@ export class Game extends Scene {
         this.fail = this.sound.add('fail');
         this.complete = this.sound.add('complete');
 
-        // this.gameObject.setInteractive();
-        // this.input.on('pointerdown', (pointer: any) => {
-        //     console.log('Clicked at:', pointer.x, pointer.y);
-        // })
-
         this.backgroundImage = this.add.image(0, 0, "background");
 
         this.scaleImagesRelativeTo(this.backgroundImage, undefined, false);
@@ -75,7 +70,6 @@ export class Game extends Scene {
                 obj.y = dragY;
             });
             obj.on('pointerup', () => {
-                console.log("Dragged")
                 this.checkDropZone(obj);
             });
         })
@@ -151,7 +145,6 @@ export class Game extends Scene {
         zone.isEmpty = false;
 
         seed.destroy();
-        console.log(this.objects);
         const plant = this.add.image(zone.x, zone.y - 15, 'plant1')
             .setScale(0.01)
             .setDepth(1);
